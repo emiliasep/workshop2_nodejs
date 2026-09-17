@@ -51,17 +51,21 @@ const server = http.createServer((req, res) => {
         // TODO: Add 'else if' for '/about' -> 'about.html'
         // Example: else if (req.url === '/about') { filePath = path.join(PUBLIC_DIR, 'about.html'); }
         
-        
+        else if (req.url === '/about') {
+            filePath = path.join(PUBLIC_DIR, 'about.html');
+        }
         // TODO: Add 'else if' for '/contact' -> 'contact.html'
-        
-        
+
+        else if (req.url === '/contact') {
+            filePath = path.join(PUBLIC_DIR, 'contact.html');
+        }
+
         // ========================================
         // TODO: Task 4 - Serve CSS Files
         // ========================================
         // Handle requests for CSS files from /styles/ folder
         // Uncomment and complete the security check:
         
-        /*
         else if (req.url.startsWith('/styles/')) {
             filePath = path.join(PUBLIC_DIR, req.url);
             
@@ -72,7 +76,7 @@ const server = http.createServer((req, res) => {
                 return;
             }
         }
-        */
+
         else {
             // No route matched -> 404
             handle404(res);
@@ -133,8 +137,7 @@ function handle404(res) {
     // If successful: Send 404 status with the HTML content
     // If failed: Send 404 status with plain text "404 - Page Not Found"
     
-    // Example structure:
-    /*
+
     fs.readFile(notFoundPath, (err, content) => {
         if (err) {
             res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -144,7 +147,7 @@ function handle404(res) {
             res.end(content, 'utf-8');
         }
     });
-    */
+    
 }
 
 // Function to handle 500 errors (Server Error)
@@ -160,7 +163,15 @@ function handleServerError(res, error) {
     // TODO: Similar to handle404, read serverErrorPath and serve it
     // If successful: Send 500 status with the HTML content
     // If failed: Send 500 status with plain text "500 - Internal Server Error"
-    
+    fs.readFile(serverErrorPath, (err, content) => {
+        if (err) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('500 - Internal Server Error');
+        } else {
+            res.writeHead(500, { 'Content-Type': 'text/html' });
+            res.end(content, 'utf-8');
+        }
+    });
 }
 
 
@@ -172,7 +183,7 @@ server.listen(PORT, () => {
     // TODO: Log a message to indicate the server is running
     // Example: console.log(`Server is running on http://localhost:${PORT}`);
     
-    
+    console.log(`Server is running on http://localhost:${PORT}`);
     // Bonus: You can also log the available routes for better user experience
     /*
     console.log('Available routes:');

@@ -154,7 +154,7 @@ function handle404(res) {
 function handleServerError(res, error) {
     // Step 1: Log the error to the console
     // TODO: Use console.error() to log the error
-    
+    console.error(error);
     
     // Step 2: Create the path to 500.html
     const serverErrorPath = path.join(PUBLIC_DIR, '500.html');
